@@ -51,68 +51,68 @@ body {
 
 .tile-2 {
     background-color: #eee4da;
-    background-image: url(img/HelloKitty.png);
+    background-image: url(HelloKitty.png);
     background-size: cover; /* Ensure the image fits */
 }
 
 .tile-4 {
     background-color: #ede0c8;
-    background-image: url(img/Pompompurin.jpg);
+    background-image: url(Pompompurin.jpg);
     background-size: cover; /* Ensure the image fits */
 }
 
 .tile-8 {
     background-color: #f2b179;
-    background-image: url(img/MyMelody.png);
+    background-image: url(MyMelody.png);
     background-size: cover; /* Ensure the image fits */
 }
 
 .tile-16 {
     background-color: #f59563;
-    background-image: url(img/Kuromi.jpg);
+    background-image: url(Kuromi.jpg);
     background-size: cover; /* Ensure the image fits */
 }
 
 .tile-32 {
     background-color: #f67c5f;
-    background-image: url(img/Cinnamonroll.jpg);
+    background-image: url(Cinnamonroll.jpg);
     background-size: cover; /* Ensure the image fits */
 }
 
 .tile-64 {
     background-color: #f65e3b;
-    background-image: url(img/frog.jpg);
+    background-image: url(frog.jpg);
     background-size: cover; /* Ensure the image fits */
 }
 
 .tile-128 {
     background-color: #edcf72;
-    background-image: url(img/BadtzQuestionMark.png);
+    background-image: url(BadtzQuestionMark.png);
     background-size: cover; /* Ensure the image fits */
     
 }
 
 .tile-256 {
     background-color: #edcc61;
-    background-image: url(img/SamQuestionMark.jpg);
+    background-image: url(SamQuestionMark.jpg);
     background-size: cover; /* Ensure the image fits */
 }
 
 .tile-512 {
     background-color: #edc850;
-    background-image: url(img/ChocolateQuestionMark.png);
+    background-image: url(ChocolateQuestionMark.png);
     background-size: cover; /* Ensure the image fits */
 }
 
 .tile-1024 {
     background-color: #edb040;
-    background-image: url(img/panda.jpg);
+    background-image: url(panda.jpg);
     background-size: cover; /* Ensure the image fits */
 }
 
 .tile-2048 {
     background-color: #ed7d31;
-    background-image: url(img/Final.png);
+    background-image: url(Final.png);
     background-size: cover; /* Ensure the image fits */
 }
 
@@ -135,6 +135,6 @@ body {
 
 .tile-bomb {
     background-color: #d93e3e; /* Red color for the bomb */
-    background-image: url('img/bomb.jpg'); /* Bomb icon, you can change it to any bomb image */
+    background-image: url('bomb.jpg'); /* Bomb icon, you can change it to any bomb image */
     background-size: cover;
 }

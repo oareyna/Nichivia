@@ -3,11 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calming Games</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alice&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Alice', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #6a0dad;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #5a009e;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem;
+            display: block;
+        }
+        nav a:hover {
+            background-color: #4a0080;
+        }
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .game {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .game-description {
+            flex: 1;
+            margin-right: 1rem;
+        }
+        .game button {
+            background-color: #6a0dad;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Alice', serif;
+        }
+        .game button:hover {
+            background-color: #5a009e;
+        }
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 1rem 0;
+        }
+    </style>
 </head>
-<body style="text-align: center;">
-    <h1>Welcome To  </h1>
-    <a href="game.html" target="_blank"><button>Sticky floor game</button></a>
-    <a href="Game2.html" target="_blank"><button>The Impossible 2048</button></a>
+<body>
+    <header>
+        <h1>Welcome to Calming Games</h1>
+        <p>Making a violent world calmer</p>
+    </header>
+
+    <main>
+        <div class="game">
+            <div class="game-description">
+                <h2>Calm Jump</h2>
+                <p>A relaxing jumping game designed to help you unwind and have fun.</p>
+            </div>
+            <a href="game.html"><button>Play Now</button></a>
+        </div>
+        <div class="game">
+            <div class="game-description">
+                <h2>Calm 2048</h2>
+                <p>A calming version of the classic 2048 puzzle game with soothing visuals.</p>
+            </div>
+            <a href="game2.html"><button>Play Now</button></a>
+        </div>
+        <div class="game">
+            <div class="game-description">
+                <h2>Calm Kitty Tycoon</h2>
+                <p>Manage your own cat-themed business in this stress-free tycoon game.</p>
+            </div>
+            <a href="decipher.html"><button>Play Now</button></a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Calming Games. All Rights Reserved.</p>
+    </footer>
 </body>
 </html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You Win!</title>
+  <link rel="stylesheet" href="EscapeGame.css">
+</head>
+<body>
+  <div class="win-container">
+    <h2>You Win!</h2>
+    <img id="win-image" src="win-image.png" alt="You Win!" style="width: 300px;"><br>
+    <button id="main-button-from-win">Go to Main</button>
+  </div>
+  <script>
+    // Main button (go to main page from win screen)
+    document.getElementById('main-button-from-win').addEventListener('click', function() {
+      window.location.href = 'index.html'; // Redirect to main page
+    });
+  </script>
+</body>
+</html>

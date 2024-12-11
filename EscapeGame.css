@@ -1,0 +1,146 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and layout */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #faf8ef;
+    flex-direction: column;
+}
+
+/* Game Container */
+.game-container {
+    text-align: center;
+}
+
+.grid-container {
+    position: relative;
+    display: inline-block;
+    width: 464px;  /* Width of the grid */
+    height: 352.5px;  /* Height of the grid */
+    background-color: #bbada0;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(8, 50px); 
+    grid-template-rows: repeat(6, 50px);    
+    gap: 6.25px;  /* Space between tiles */
+}
+
+/* Tile styles */
+.tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: #eee4da;
+    color: #776e65;
+    height: 50px; /* Tile size */
+    width: 50px;
+}
+
+/* Player and Cop styles */
+.tile-player {
+    background-color: #ede0c8;
+    background-image: url(catconvict.jpg);
+    background-size: cover;
+}
+
+.tile-cop {
+    background-color: #ff4747;
+    background-image: url(Catpopo.jpg);
+    background-size: cover;
+}
+
+.tile-exit {
+    background-color: #8fbc8f;
+    background-image: url(mewcat.jpg);
+    background-size: cover;
+}
+
+/* Game Info and Buttons */
+.game-info {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* Game Over Screen */
+.game-over {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+    color: red; /* Make the text red */
+    font-size: 40px; /* Increase font size */
+    font-weight: bold; /* Make the text bold */
+}
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    border: none;
+    background-color: rgb(0, 30, 128);
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: rgb(0, 30, 128);
+  }
+  
+  button:focus {
+    outline: none;
+  }
+
+/* Win Screen */
+.win-container {
+    text-align: center;
+}
+
+.win-container h1 {
+    font-size: 32px;
+    color: rgb(0, 30, 128);
+    margin-bottom: 20px;
+}
+
+.win-image {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.win-image img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+}
+
+.win-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}

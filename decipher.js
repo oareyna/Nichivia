@@ -228,7 +228,7 @@ function checkGameOver() {
 }
 
 function checkVictory() {
-    if (factories >= 3) {
+    if (factories >= 100) {
 
         document.getElementById('game').style.display = 'none';
         document.getElementById('victory').style.display = 'block';

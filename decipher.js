@@ -54,7 +54,7 @@ let workerCost = workerBaseCost;
 let productionUpgradeCost = productionUpgradeBaseCost;
 let workerUpgradeCost = workerUpgradeBaseCost;
 
-const costMultiplier = 1;
+const costMultiplier = 1.15; // Fixed costMultiplier to 1.15
 
 let offers = [];
 let tasks = [];
@@ -105,7 +105,7 @@ document.getElementById('buyFactory').addEventListener('click', () => {
     if (money >= factoryCost) {
         money -= factoryCost;
         factories += 1;
-        factoryCost = Math.floor(factoryCost * costMultiplier);
+        factoryCost = Math.ceil(factoryCost * costMultiplier); // Changed Math.floor to Math.ceil
         updateDisplay();
     }
 });
@@ -114,7 +114,7 @@ document.getElementById('hireWorker').addEventListener('click', () => {
     if (money >= workerCost) {
         money -= workerCost;
         workers += 1;
-        workerCost = Math.floor(workerCost * costMultiplier);
+        workerCost = Math.ceil(workerCost * costMultiplier); // Changed Math.floor to Math.ceil
         updateDisplay();
     }
 });
@@ -123,7 +123,7 @@ document.getElementById('upgradeProduction').addEventListener('click', () => {
     if (money >= productionUpgradeCost) {
         money -= productionUpgradeCost;
         productionRate += 1;
-        productionUpgradeCost = Math.floor(productionUpgradeCost * costMultiplier);
+        productionUpgradeCost = Math.ceil(productionUpgradeCost * costMultiplier); // Changed Math.floor to Math.ceil
         updateDisplay();
     }
 });
@@ -132,7 +132,7 @@ document.getElementById('upgradeWorker').addEventListener('click', () => {
     if (money >= workerUpgradeCost) {
         money -= workerUpgradeCost;
         workerProductivity += 0.5;
-        workerUpgradeCost = Math.floor(workerUpgradeCost * costMultiplier);
+        workerUpgradeCost = Math.ceil(workerUpgradeCost * costMultiplier); // Changed Math.floor to Math.ceil
         updateDisplay();
     }
 });
@@ -273,7 +273,7 @@ function checkGameOver() {
 }
 
 function checkVictory() {
-    if (factories >= 3) {
+    if (factories >= 100) { // Fixed the victory condition to 100 factories
         gameRunning = false;
         clearGameIntervals();
         showVictoryCutscene();

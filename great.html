@@ -11,38 +11,48 @@
         body {
             font-family:  'Alice', cursive;
             text-align: center;
-            background-color: #f0f0f0;
+            background: linear-gradient(120deg, #e0c3fc, #8ec5fc);
             padding: 50px;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .game-container {
             display: inline-block;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
         }
         .choice-btn, .start-btn, .shoot-btn, .try-again-btn {
             padding: 10px 20px;
             margin: 10px;
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
             cursor: pointer;
             font-size: 16px;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            color: white;
         }
         .choice-btn img {
             width: 50px;
             height: 50px;
         }
         .choice-btn:hover, .start-btn:hover, .shoot-btn:hover, .try-again-btn:hover {
-            background-color: #ddd;
+            background: linear-gradient(45deg, #e52e71, #ff8a00);
+            transform: scale(1.1);
         }
         .choice-btn.selected {
-            background-color: #ccc;
+            background: linear-gradient(45deg, #ff512f, #dd2476);
         }
         .result {
             margin-top: 20px;
             font-size: 20px;
             font-weight: bold;
+            color: #333;
         }
         .hidden {
             display: none;
@@ -102,17 +112,18 @@
             let resultMessage = `You lost!!!! You chose ${playerChoice}. The computer chose ${computerChoice}.`;
 
             const reasons = [
-                "Computer wins because it has a secret algorithm!",
-                "Looks like the computer outsmarted you this time!",
-                "Better luck next time, the computer is on fire!",
-                "You lost this round, but don't give up!",
-                "The computer wins! Maybe it's just having a lucky day.",
-                "You got smoked like a barbeque!",
-                "Computer wins! Did you even try?",
-                "You just got schooled by a machine.",
-                "The computer wins! Guess it wasn't your day.",
-                "You lost. Perhaps it's time to switch to Tic-Tac-Toe."
+                "The computer read your mind and countered perfectly!",
+                "Looks like you fell for the oldest trick in the book.",
+                "Ouch! The computer crushed your hopes and dreams!",
+                "Next time, try thinking a little harder...",
+                "You just got schooled by a glorified calculator!",
+                "Are you even trying? That was embarrassing.",
+                "Yikes! Maybe practice before challenging a computer.",
+                "You played yourself. Congratulations!",
+                "Even a random choice would have been better!",
+                "The computer wins! Maybe retire while you're ahead."
             ];
+
             const randomReason = reasons[Math.floor(Math.random() * reasons.length)];
 
             resultMessage += ` ${randomReason}`;
@@ -126,7 +137,9 @@
         function tryAgain() {
             document.getElementById('result').innerText = '';
             document.getElementById('tryAgainBtn').classList.add('hidden');
-            document.getElementById(selectedBtn).classList.remove('selected');
+            if (selectedBtn) {
+                document.getElementById(selectedBtn).classList.remove('selected');
+            }
             startGame();
         }
     </script>

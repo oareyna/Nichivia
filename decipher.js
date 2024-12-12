@@ -3,10 +3,33 @@ function startGame() {
     document.getElementById('cutscene').style.display = 'none';
     document.getElementById('game').style.display = 'block';
 
-    // Start intervals only when game starts
+    // Generate initial task and offer
     gameIntervals();
     createOffer();
     createTask();
+
+    // Reset game variables if needed
+    money = 0;
+    catnip = 0;
+    factories = 1;
+    productionRate = 1;
+    workers = 0;
+    workerProductivity = 0.4;
+    marcoHappiness = 100;
+    gameRunning = true;
+
+    // Reset costs
+    factoryCost = factoryBaseCost;
+    workerCost = workerBaseCost;
+    productionUpgradeCost = productionUpgradeBaseCost;
+    workerUpgradeCost = workerUpgradeBaseCost;
+
+    // Clear any existing offers and tasks
+    offers = [];
+    tasks = [];
+
+    // Update display
+    updateDisplay();
 }
 
 // Game Variables
@@ -29,13 +52,10 @@ let workerCost = workerBaseCost;
 let productionUpgradeCost = productionUpgradeBaseCost;
 let workerUpgradeCost = workerUpgradeBaseCost;
 
-const costMultiplier = 1;
+const costMultiplier = 1.5;
 
 let offers = [];
 let tasks = [];
-
-let offerInterval;
-let taskInterval;
 
 // DOM Elements
 const moneyEl = document.getElementById('money');
@@ -82,7 +102,7 @@ document.getElementById('buyFactory').addEventListener('click', () => {
     if (money >= factoryCost) {
         money -= factoryCost;
         factories += 1;
-        factoryCost *= costMultiplier;
+        factoryCost = Math.floor(factoryCost * costMultiplier);
         updateDisplay();
     }
 });
@@ -91,7 +111,7 @@ document.getElementById('hireWorker').addEventListener('click', () => {
     if (money >= workerCost) {
         money -= workerCost;
         workers += 1;
-        workerCost *= costMultiplier;
+        workerCost = Math.floor(workerCost * costMultiplier);
         updateDisplay();
     }
 });
@@ -100,7 +120,7 @@ document.getElementById('upgradeProduction').addEventListener('click', () => {
     if (money >= productionUpgradeCost) {
         money -= productionUpgradeCost;
         productionRate += 1;
-        productionUpgradeCost *= costMultiplier;
+        productionUpgradeCost = Math.floor(productionUpgradeCost * costMultiplier);
         updateDisplay();
     }
 });
@@ -109,23 +129,26 @@ document.getElementById('upgradeWorker').addEventListener('click', () => {
     if (money >= workerUpgradeCost) {
         money -= workerUpgradeCost;
         workerProductivity += 0.5;
-        workerUpgradeCost *= costMultiplier;
+        workerUpgradeCost = Math.floor(workerUpgradeCost * costMultiplier);
         updateDisplay();
     }
 });
 
 function createOffer() {
-    const offerAmount = Math.floor(Math.random() * 10) + 10;
-    const offerPrice = offerAmount * 5;
+    // Only create a new offer if there are no existing offers
+    if (offers.length === 0) {
+        const offerAmount = Math.floor(Math.random() * 10) + 10;
+        const offerPrice = offerAmount * 5;
 
-    const offer = {
-        amount: offerAmount,
-        price: offerPrice,
-        timeout: setTimeout(() => failOffer(offer), 10000),
-    };
+        const offer = {
+            amount: offerAmount,
+            price: offerPrice,
+            timeout: setTimeout(() => failOffer(offer), 10000),
+        };
 
-    offers.push(offer);
-    renderOffers();
+        offers.push(offer);
+        renderOffers();
+    }
 }
 
 function renderOffers() {
@@ -134,10 +157,9 @@ function renderOffers() {
     offers.forEach((offer, index) => {
         const offerDiv = document.createElement('div');
         offerDiv.classList.add('offer');
-        offerDiv.innerHTML = ` 
-            <p>Marco will buy ${offer.amount} Catnip for $${offer.price}</p>
-            <button onclick="completeOffer(${index})">Sell Catnip</button>
-        `;
+        offerDiv.innerHTML = 
+            `<p>Marco will buy ${offer.amount} Catnip for $${offer.price}</p>
+            <button onclick="completeOffer(${index})">Sell Catnip</button>`;
         offerContainer.appendChild(offerDiv);
     });
 }
@@ -157,43 +179,48 @@ function completeOffer(index) {
 }
 
 function failOffer(offer) {
-    marcoHappiness -= 20;
+    marcoHappiness = Math.max(0, marcoHappiness - 20);
     offers = offers.filter((o) => o !== offer);
     renderOffers();
+    updateDisplay();
     checkGameOver();
 }
 
 function createTask() {
-    const taskOptions = [
-        { description: "Write the reverse of the alphabet in order.", validate: (input) => input.trim().toUpperCase() === "ZYXWVUTSRQPONMLKJIHGFEDCBA" },
-        { description: "Calculate: (12 × 8) + (45 ÷ 5).", validate: (input) => input.trim() === "101" },
-        { description: "Type the first 10 prime numbers, separated by spaces.", validate: (input) => input.trim() === "2 3 5 7 11 13 17 19 23 29" },
-        { description: "What is the factorial of 5? (5!)", validate: (input) => input.trim() === "120" },
-        { description: "Solve this riddle: What has keys but can't open locks?", validate: (input) => input.trim().toLowerCase() === "piano" },
-        { description: "Write the Fibonacci sequence up to 21, separated by spaces.", validate: (input) => input.trim() === "0 1 1 2 3 5 8 13 21" },
-        { description: "What is the sum of all even numbers between 1 and 20?", validate: (input) => input.trim() === "110" },
-        { description: "Write the binary representation of the number 13.", validate: (input) => input.trim() === "1101" },
-        { description: "Spell the word 'Catnip' backward, three times with spaces.", validate: (input) => input.trim() === "pintaC pintaC pintaC" },
-        { description: "Find the square of 25 and subtract the square of 15.", validate: (input) => input.trim() === "400" },
-    ];
+    // Only create a new task if there are no existing tasks
+    if (tasks.length === 0) {
+        const taskOptions = [
+            { description: "Write the reverse of the alphabet in order.", validate: (input) => input.trim().toUpperCase() === "ZYXWVUTSRQPONMLKJIHGFEDCBA" },
+            { description: "Calculate: (12 × 8) + (45 ÷ 5).", validate: (input) => input.trim() === "101" },
+            { description: "Type the first 10 prime numbers, separated by spaces.", validate: (input) => input.trim() === "2 3 5 7 11 13 17 19 23 29" },
+            { description: "What is the factorial of 5? (5!)", validate: (input) => input.trim() === "120" },
+            { description: "Solve this riddle: What has keys but can't open locks?", validate: (input) => input.trim().toLowerCase() === "piano" },
+            { description: "Write the Fibonacci sequence up to 21, separated by spaces.", validate: (input) => input.trim() === "0 1 1 2 3 5 8 13 21" },
+            { description: "What is the sum of all even numbers between 1 and 20?", validate: (input) => input.trim() === "110" },
+            { description: "Write the binary representation of the number 13.", validate: (input) => input.trim() === "1101" },
+            { description: "Spell the word 'Catnip' backward, three times with spaces.", validate: (input) => input.trim() === "pintaC pintaC pintaC" },
+            { description: "Find the square of 25 and subtract the square of 15.", validate: (input) => input.trim() === "400" },
+        ];
 
-    const randomTaskIndex = Math.floor(Math.random() * taskOptions.length);
-    const selectedTask = taskOptions[randomTaskIndex];
+        const randomTaskIndex = Math.floor(Math.random() * taskOptions.length);
+        const selectedTask = taskOptions[randomTaskIndex];
 
-    const task = {
-        description: selectedTask.description,
-        validate: selectedTask.validate,
-        timeout: setTimeout(() => failTask(task), 15000),
-    };
+        const task = {
+            description: selectedTask.description,
+            validate: selectedTask.validate,
+            timeout: setTimeout(() => failTask(task), 15000),
+        };
 
-    tasks.push(task);
-    renderTasks();
+        tasks.push(task);
+        renderTasks();
+    }
 }
 
 function failTask(task) {
-    marcoHappiness -= 20;
+    marcoHappiness = Math.max(0, marcoHappiness - 20);
     tasks = tasks.filter((t) => t !== task);
     renderTasks();
+    updateDisplay();
     checkGameOver();
 }
 
@@ -216,11 +243,10 @@ function renderTasks() {
     tasks.forEach((task, index) => {
         const taskDiv = document.createElement('div');
         taskDiv.classList.add('task');
-        taskDiv.innerHTML = ` 
-            <p>${task.description}</p>
+        taskDiv.innerHTML =  
+            `<p>${task.description}</p>
             <input type="text" id="taskInput${index}" autocomplete="off">
-            <button onclick="completeTask(${index}, document.getElementById('taskInput${index}').value)">Submit</button>
-        `;
+            <button onclick="completeTask(${index}, document.getElementById('taskInput${index}').value)">Submit</button>`;
         taskContainer.appendChild(taskDiv);
     });
 }
@@ -228,19 +254,45 @@ function renderTasks() {
 function checkGameOver() {
     if (marcoHappiness <= 0) {
         gameRunning = false; // Stop game intervals
+        clearGameIntervals();
         showGameOverCutscene();
-        clearInterval(offerInterval);  // Stop the offer interval
-        clearInterval(taskInterval);   // Stop the task interval
     }
 }
 
 function checkVictory() {
     if (factories >= 100) {
         gameRunning = false; // Stop game intervals
+        clearGameIntervals();
         showVictoryCutscene();
-        clearInterval(offerInterval);  // Stop the offer interval
-        clearInterval(taskInterval);   // Stop the task interval
     }
+}
+
+function clearGameIntervals() {
+    if (window.catnipInterval) clearInterval(window.catnipInterval);
+    if (window.offerInterval) clearInterval(window.offerInterval);
+    if (window.taskInterval) clearInterval(window.taskInterval);
+}
+
+function gameIntervals() {
+    if (!gameRunning) return; // Prevent intervals if the game is over
+
+    // Clear any existing intervals to prevent multiple concurrent intervals
+    clearGameIntervals();
+
+    window.catnipInterval = setInterval(() => {
+        if (gameRunning) {
+            generateCatnip();
+            checkVictory();
+        }
+    }, 1000);
+
+    window.offerInterval = setInterval(() => {
+        if (gameRunning) createOffer();
+    }, 13000);
+
+    window.taskInterval = setInterval(() => {
+        if (gameRunning) createTask();
+    }, 17000);
 }
 
 function showGameOverCutscene() {
@@ -254,28 +306,5 @@ function showVictoryCutscene() {
     document.getElementById('victory').style.display = 'block';
     document.getElementById('victory-message').textContent = "Congratulations! You built 100 factories and achieved ultimate success!";
 }
-
-function gameIntervals() {
-    if (!gameRunning) return; // Prevent intervals if the game is over
-
-    // Generate catnip every 1 second
-    setInterval(() => {
-        if (gameRunning) {
-            generateCatnip();
-            checkVictory();
-        }
-    }, 1000);
-
-    // Generate offers every 13 seconds
-    offerInterval = setInterval(() => {
-        if (gameRunning) createOffer();
-    }, 13000);
-
-    // Generate tasks every 17 seconds
-    taskInterval = setInterval(() => {
-        if (gameRunning) createTask();
-    }, 17000);
-}
-
 
 updateDisplay();

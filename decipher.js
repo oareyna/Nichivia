@@ -22,6 +22,7 @@ function startGame() {
     // Clear any existing offers and tasks
     offers = [];
     tasks = [];
+    activeTaskTimers.clear();
 
     // Start game intervals
     gameIntervals();
@@ -57,6 +58,7 @@ const costMultiplier = 1;
 
 let offers = [];
 let tasks = [];
+const activeTaskTimers = new Map(); // Track active task timers
 
 // DOM Elements
 const moneyEl = document.getElementById('money');
@@ -183,7 +185,6 @@ function completeOffer(index) {
 
 function failOffer(offer) {
     marcoHappiness = Math.max(0, marcoHappiness - 20);
-    console.log("offer fail")
     offers = offers.filter((o) => o !== offer);
     renderOffers();
     updateDisplay();
@@ -207,23 +208,29 @@ function createTask() {
     const randomTaskIndex = Math.floor(Math.random() * taskOptions.length);
     const selectedTask = taskOptions[randomTaskIndex];
 
+    const taskId = Date.now(); // Unique task ID
+
     const task = {
+        id: taskId,
         description: selectedTask.description,
         validate: selectedTask.validate,
-        timeout: setTimeout(() => {
-            console.log("Task timed out:", selectedTask.description);
-            failTask(task);
-        }, 15000),
     };
 
     tasks.push(task);
+    activeTaskTimers.set(taskId, setTimeout(() => {
+        console.log("Task timed out:", selectedTask.description);
+        failTask(task);
+    }, 15000));
+
     renderTasks();
 }
 
 function failTask(task) {
     console.log("Failing task:", task.description);
     marcoHappiness = Math.max(0, marcoHappiness - 20);
-    tasks = tasks.filter((t) => t !== task);
+    tasks = tasks.filter((t) => t.id !== task.id);
+    clearTimeout(activeTaskTimers.get(task.id));
+    activeTaskTimers.delete(task.id);
     renderTasks();
     updateDisplay();
     checkGameOver();
@@ -233,7 +240,8 @@ function completeTask(index, input) {
     const task = tasks[index];
     if (task.validate(input)) {
         marcoHappiness = Math.min(marcoHappiness + 5, 100);
-        clearTimeout(task.timeout);
+        clearTimeout(activeTaskTimers.get(task.id));
+        activeTaskTimers.delete(task.id);
         tasks.splice(index, 1);
         renderTasks();
         updateDisplay();
@@ -276,6 +284,10 @@ function clearGameIntervals() {
     if (window.catnipInterval) clearInterval(window.catnipInterval);
     if (window.offerInterval) clearInterval(window.offerInterval);
     if (window.taskInterval) clearInterval(window.taskInterval);
+
+    // Clear all task timers
+    activeTaskTimers.forEach((timeout) => clearTimeout(timeout));
+    activeTaskTimers.clear();
 }
 
 function gameIntervals() {

@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  #game-board {
+    padding-left: 500px;
+    display: grid;
+    grid-template-columns: repeat(25, 25px);
+    grid-template-rows: repeat(25, 25px);
+    gap: 0;
+    margin: auto;
+    width: 1125px;
+    height: 1125px;
+  }
+  
+  .tile {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .tile-wall {
+    background-color: darkgreen;
+  }
+  
+  .tile-empty {
+    background-color: lightgreen;
+  }
+  
+  .tile-snake {
+    background-color: blue;
+  }
+  
+  .tile-apple {
+    background-color: red;
+  }

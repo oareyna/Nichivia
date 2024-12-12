@@ -53,7 +53,7 @@ let workerCost = workerBaseCost;
 let productionUpgradeCost = productionUpgradeBaseCost;
 let workerUpgradeCost = workerUpgradeBaseCost;
 
-const costMultiplier = 1.5;
+const costMultiplier = 1;
 
 let offers = [];
 let tasks = [];
@@ -183,6 +183,7 @@ function completeOffer(index) {
 
 function failOffer(offer) {
     marcoHappiness = Math.max(0, marcoHappiness - 20);
+    console.log("offer fail")
     offers = offers.filter((o) => o !== offer);
     renderOffers();
     updateDisplay();
@@ -217,6 +218,7 @@ function createTask() {
 }
 
 function failTask(task) {
+    console.log("task fail")
     marcoHappiness = Math.max(0, marcoHappiness - 20);
     tasks = tasks.filter((t) => t !== task);
     renderTasks();

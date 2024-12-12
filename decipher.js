@@ -3,13 +3,10 @@ function startGame() {
     document.getElementById('cutscene').style.display = 'none';
     document.getElementById('game').style.display = 'block';
 
-    // Generate initial task and offer
+    // Start intervals only when game starts
     gameIntervals();
     createOffer();
     createTask();
-
-    // Start intervals after the game starts
-    
 }
 
 // Game Variables
@@ -36,6 +33,9 @@ const costMultiplier = 1;
 
 let offers = [];
 let tasks = [];
+
+let offerInterval;
+let taskInterval;
 
 // DOM Elements
 const moneyEl = document.getElementById('money');
@@ -134,7 +134,7 @@ function renderOffers() {
     offers.forEach((offer, index) => {
         const offerDiv = document.createElement('div');
         offerDiv.classList.add('offer');
-        offerDiv.innerHTML = `
+        offerDiv.innerHTML = ` 
             <p>Marco will buy ${offer.amount} Catnip for $${offer.price}</p>
             <button onclick="completeOffer(${index})">Sell Catnip</button>
         `;
@@ -229,6 +229,8 @@ function checkGameOver() {
     if (marcoHappiness <= 0) {
         gameRunning = false; // Stop game intervals
         showGameOverCutscene();
+        clearInterval(offerInterval);  // Stop the offer interval
+        clearInterval(taskInterval);   // Stop the task interval
     }
 }
 
@@ -236,6 +238,8 @@ function checkVictory() {
     if (factories >= 100) {
         gameRunning = false; // Stop game intervals
         showVictoryCutscene();
+        clearInterval(offerInterval);  // Stop the offer interval
+        clearInterval(taskInterval);   // Stop the task interval
     }
 }
 
@@ -253,6 +257,8 @@ function showVictoryCutscene() {
 
 function gameIntervals() {
     if (!gameRunning) return; // Prevent intervals if the game is over
+
+    // Generate catnip every 1 second
     setInterval(() => {
         if (gameRunning) {
             generateCatnip();
@@ -260,11 +266,13 @@ function gameIntervals() {
         }
     }, 1000);
 
-    setInterval(() => {
+    // Generate offers every 13 seconds
+    offerInterval = setInterval(() => {
         if (gameRunning) createOffer();
     }, 13000);
 
-    setInterval(() => {
+    // Generate tasks every 17 seconds
+    taskInterval = setInterval(() => {
         if (gameRunning) createTask();
     }, 17000);
 }

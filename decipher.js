@@ -2,7 +2,11 @@
 function startGame() {
     document.getElementById('cutscene').style.display = 'none';
     document.getElementById('game').style.display = 'block';
-    
+
+    // Generate initial task and offer
+    createOffer();
+    createTask();
+
     // Start intervals after the game starts
     gameIntervals();
 }
@@ -15,7 +19,7 @@ let productionRate = 1;
 let workers = 0;
 let workerProductivity = 0.4;
 let marcoHappiness = 100;
-let gameRunning = true
+let gameRunning = true;
 
 const factoryBaseCost = 50;
 const workerBaseCost = 25;
@@ -236,7 +240,7 @@ function checkVictory() {
 }
 
 function gameIntervals() {
-    if (!gameRunning) return
+    if (!gameRunning) return;
     setInterval(() => {
         generateCatnip();
         checkVictory();

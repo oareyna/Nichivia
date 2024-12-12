@@ -194,7 +194,7 @@ function failOffer(offer) {
 function createTask() {
     const taskOptions = [
         { description: "Write the reverse of the alphabet in order.", validate: (input) => input.trim().toUpperCase() === "ZYXWVUTSRQPONMLKJIHGFEDCBA" },
-        { description: "Calculate: (12 × 8) + (45 ÷ 5).", validate: (input) => input.trim() === "101" },
+        { description: "Calculate: (12 × 8) + (45 ÷ 5).", validate: (input) => input.trim() === "105" },
         { description: "Type the first 10 prime numbers, separated by spaces.", validate: (input) => input.trim() === "2 3 5 7 11 13 17 19 23 29" },
         { description: "What is the factorial of 5? (5!)", validate: (input) => input.trim() === "120" },
         { description: "Solve this riddle: What has keys but can't open locks?", validate: (input) => input.trim().toLowerCase() === "piano" },

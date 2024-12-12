@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Flick Test</title>
+  <h1>Flick Test</h1>
+  <hr>
+  <style>
+    body {
+      font-family: 'Alice', serif;
+      text-align: center;
+    }
+
+    #clicker {
+      width: 100px;
+      height: 100px;
+      background-color: blue;
+      color: white;
+      font-size: 24px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      position: absolute;
+      display: none;
+      font-family: 'Alice', serif;
+    }
+
+    #startButton, #tryAgainButton {
+      padding: 20px 30px;
+      background-color: rgb(117, 0, 128);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px auto;
+      display: block;
+      font-size: large;
+      font-family: 'Alice', serif;
+    }
+
+    #result {
+      font-size: 20px;
+      display: none;
+      font-family: 'Alice', serif;
+    }
+
+    #clicks, #time {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <button id="startButton">Start</button>
+  <button id="tryAgainButton" style="display: none;">Try Again</button>
+  <button id="clicker">Click Me!</button>
+  <p id="clicks">Clicks: 0</p>
+  <p id="time">Time: 10</p>
+  <p id="result"></p>
+
+  <script>
+    const clicker = document.getElementById('clicker');
+    const clicksDisplay = document.getElementById('clicks');
+    const timeDisplay = document.getElementById('time');
+    const startButton = document.getElementById('startButton');
+    const tryAgainButton = document.getElementById('tryAgainButton');
+    const resultDisplay = document.getElementById('result');
+
+    let clicks = 0;
+    let timeLeft = 12;
+    let timerId;
+    let moveInterval;
+
+    function moveClicker() {
+      const maxX = window.innerWidth - clicker.offsetWidth;
+      const maxY = window.innerHeight - clicker.offsetHeight;
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+      clicker.style.left = randomX + 'px';
+      clicker.style.top = randomY + 'px';
+    }
+
+    startButton.addEventListener('click', () => {
+      startButton.style.display = 'none';
+      clicker.style.display = 'block';
+      timeDisplay.textContent = `Time: ${timeLeft}`;
+      clicks = 0;
+      clicksDisplay.style.display = 'block';
+      timeDisplay.style.display = 'block';
+      resultDisplay.style.display = 'none';
+
+      moveInterval = setInterval(moveClicker, 2000); // Move the clicker every 2 seconds
+
+      timerId = setInterval(() => {
+        timeLeft--;
+        timeDisplay.textContent = `Time: ${timeLeft}`;
+
+        if (timeLeft <= 5) {
+          clearInterval(moveInterval); // Stop the regular movement
+          moveInterval = setInterval(moveClicker, 50); // Start rapid movement
+        }
+
+        if (timeLeft === 0) {
+          clearInterval(timerId);
+          clearInterval(moveInterval); // Stop the rapid movement
+          clicker.style.display = 'none';
+          tryAgainButton.style.display = 'block';
+          resultDisplay.style.display = 'block';
+          resultDisplay.textContent = `You clicked ${clicks} times in 10 seconds!`;
+        }
+      }, 1000);
+    });
+
+    tryAgainButton.addEventListener('click', () => {
+      clearInterval(timerId);
+      clearInterval(moveInterval); // Stop moving the clicker
+      tryAgainButton.style.display = 'none';
+      startButton.style.display = 'block';
+      clicksDisplay.style.display = 'none';
+      timeDisplay.style.display = 'none';
+      resultDisplay.style.display = 'none';
+    });
+
+    clicker.addEventListener('click', () => {
+      clicks++;
+      clicksDisplay.textContent = `Clicks: ${clicks}`;
+    });
+  </script>
+</body>
+</html>

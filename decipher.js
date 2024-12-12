@@ -226,28 +226,47 @@ function renderTasks() {
 
 function checkGameOver() {
     if (marcoHappiness <= 0) {
-        document.getElementById('game').style.display = 'none';
-        document.getElementById('game-over').style.display = 'block';
+        gameRunning = false; // Stop game intervals
+        showGameOverCutscene();
     }
 }
 
 function checkVictory() {
     if (factories >= 100) {
-
-        document.getElementById('game').style.display = 'none';
-        document.getElementById('victory').style.display = 'block';
+        gameRunning = false; // Stop game intervals
+        showVictoryCutscene();
     }
 }
 
+function showGameOverCutscene() {
+    document.getElementById('game').style.display = 'none';
+    document.getElementById('game-over').style.display = 'block';
+    document.getElementById('game-over-message').textContent = "Marco's happiness ran out. Game Over!";
+}
+
+function showVictoryCutscene() {
+    document.getElementById('game').style.display = 'none';
+    document.getElementById('victory').style.display = 'block';
+    document.getElementById('victory-message').textContent = "Congratulations! You built 100 factories and achieved ultimate success!";
+}
+
 function gameIntervals() {
-    if (!gameRunning) return;
+    if (!gameRunning) return; // Prevent intervals if the game is over
     setInterval(() => {
-        generateCatnip();
-        checkVictory();
+        if (gameRunning) {
+            generateCatnip();
+            checkVictory();
+        }
     }, 1000);
 
-    setInterval(createOffer, 13000);
-    setInterval(createTask, 20000);
+    setInterval(() => {
+        if (gameRunning) createOffer();
+    }, 13000);
+
+    setInterval(() => {
+        if (gameRunning) createTask();
+    }, 20000);
 }
+
 
 updateDisplay();

@@ -1,54 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flick Test</title>
-  <h1>Flick Test</h1>
-  <hr>
   <style>
     body {
       font-family: 'Alice', serif;
       text-align: center;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #d3cce3, #e9e4f0);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #4c006b;
     }
 
     #clicker {
       width: 100px;
       height: 100px;
-      background-color: blue;
+      background-color: #007bff;
       color: white;
       font-size: 24px;
       border: none;
-      border-radius: 5px;
+      border-radius: 50%;
       cursor: pointer;
       position: absolute;
       display: none;
-      font-family: 'Alice', serif;
     }
 
-    #startButton, #tryAgainButton {
-      padding: 20px 30px;
-      background-color: rgb(117, 0, 128);
+    button {
+      padding: 15px 30px;
+      background-color: #750080;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 25px;
       cursor: pointer;
-      margin: 10px auto;
-      display: block;
-      font-size: large;
-      font-family: 'Alice', serif;
+      font-size: 1.2rem;
+      margin: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #590065;
     }
 
     #result {
-      font-size: 20px;
+      font-size: 1.5rem;
+      margin-top: 20px;
+      color: #333;
       display: none;
-      font-family: 'Alice', serif;
     }
 
     #clicks, #time {
-      display: none;
+      font-size: 1.2rem;
+      margin: 5px 0;
+      color: #4c006b;
+    }
+
+    #time.critical {
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
+  <h1>Flick Test</h1>
   <button id="startButton">Start</button>
   <button id="tryAgainButton" style="display: none;">Try Again</button>
   <button id="clicker">Click Me!</button>
@@ -65,7 +90,7 @@
     const resultDisplay = document.getElementById('result');
 
     let clicks = 0;
-    let timeLeft = 12;
+    let timeLeft = 10;
     let timerId;
     let moveInterval;
 
@@ -78,29 +103,44 @@
       clicker.style.top = randomY + 'px';
     }
 
+    function resetGame() {
+      clearInterval(timerId);
+      clearInterval(moveInterval);
+      timeLeft = 10;
+      clicks = 0;
+      clicksDisplay.textContent = `Clicks: ${clicks}`;
+      timeDisplay.textContent = `Time: ${timeLeft}`;
+      timeDisplay.classList.remove('critical');
+      startButton.style.display = 'block';
+      clicker.style.display = 'none';
+      tryAgainButton.style.display = 'none';
+      clicksDisplay.style.display = 'none';
+      timeDisplay.style.display = 'none';
+      resultDisplay.style.display = 'none';
+    }
+
     startButton.addEventListener('click', () => {
+      resetGame();
       startButton.style.display = 'none';
       clicker.style.display = 'block';
-      timeDisplay.textContent = `Time: ${timeLeft}`;
-      clicks = 0;
       clicksDisplay.style.display = 'block';
       timeDisplay.style.display = 'block';
-      resultDisplay.style.display = 'none';
 
-      moveInterval = setInterval(moveClicker, 2000); // Move the clicker every 2 seconds
+      moveInterval = setInterval(moveClicker, 2000);
 
       timerId = setInterval(() => {
         timeLeft--;
         timeDisplay.textContent = `Time: ${timeLeft}`;
 
         if (timeLeft <= 5) {
-          clearInterval(moveInterval); // Stop the regular movement
-          moveInterval = setInterval(moveClicker, 50); // Start rapid movement
+          timeDisplay.classList.add('critical');
+          clearInterval(moveInterval);
+          moveInterval = setInterval(moveClicker, 50);
         }
 
-        if (timeLeft === 0) {
+        if (timeLeft <= 0) {
           clearInterval(timerId);
-          clearInterval(moveInterval); // Stop the rapid movement
+          clearInterval(moveInterval);
           clicker.style.display = 'none';
           tryAgainButton.style.display = 'block';
           resultDisplay.style.display = 'block';
@@ -109,15 +149,7 @@
       }, 1000);
     });
 
-    tryAgainButton.addEventListener('click', () => {
-      clearInterval(timerId);
-      clearInterval(moveInterval); // Stop moving the clicker
-      tryAgainButton.style.display = 'none';
-      startButton.style.display = 'block';
-      clicksDisplay.style.display = 'none';
-      timeDisplay.style.display = 'none';
-      resultDisplay.style.display = 'none';
-    });
+    tryAgainButton.addEventListener('click', resetGame);
 
     clicker.addEventListener('click', () => {
       clicks++;

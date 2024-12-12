@@ -210,7 +210,10 @@ function createTask() {
     const task = {
         description: selectedTask.description,
         validate: selectedTask.validate,
-        timeout: setTimeout(() => failTask(task), 15000),
+        timeout: setTimeout(() => {
+            console.log("Task timed out:", selectedTask.description);
+            failTask(task);
+        }, 15000),
     };
 
     tasks.push(task);
@@ -218,7 +221,7 @@ function createTask() {
 }
 
 function failTask(task) {
-    console.log("task fail")
+    console.log("Failing task:", task.description);
     marcoHappiness = Math.max(0, marcoHappiness - 20);
     tasks = tasks.filter((t) => t !== task);
     renderTasks();

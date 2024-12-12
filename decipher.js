@@ -280,6 +280,7 @@ function checkVictory() {
     }
 }
 
+
 function clearGameIntervals() {
     if (window.catnipInterval) clearInterval(window.catnipInterval);
     if (window.offerInterval) clearInterval(window.offerInterval);

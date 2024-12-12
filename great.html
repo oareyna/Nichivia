@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alice&display=swap" rel="stylesheet">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            font-family:  'Alice', cursive;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 50px;
+        }
+        .game-container {
+            display: inline-block;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .choice-btn, .start-btn, .shoot-btn, .try-again-btn {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .choice-btn img {
+            width: 50px;
+            height: 50px;
+        }
+        .choice-btn:hover, .start-btn:hover, .shoot-btn:hover, .try-again-btn:hover {
+            background-color: #ddd;
+        }
+        .choice-btn.selected {
+            background-color: #ccc;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Rock Paper Scissors</h1>
+        <button class="start-btn" id="startBtn" onclick="startGame()">Start</button>
+        <div id="animation" class="hidden">Rock, Paper, Scissors...</div>
+        <div id="choices" class="hidden">
+            <button class="choice-btn" id="rockBtn" onclick="selectChoice('rock', 'rockBtn')"><img src="rock.jpg" alt="Rock"></button>
+            <button class="choice-btn" id="paperBtn" onclick="selectChoice('paper', 'paperBtn')"><img src="paper.webp" alt="Paper"></button>
+            <button class="choice-btn" id="scissorsBtn" onclick="selectChoice('scissors', 'scissorsBtn')"><img src="sciz.png" alt="Scissors"></button>
+        </div>
+        <button class="shoot-btn hidden" id="shootBtn" onclick="playGame()">Shoot</button>
+        <div class="result" id="result"></div>
+        <button class="try-again-btn hidden" id="tryAgainBtn" onclick="tryAgain()">Try Again</button>
+    </div>
+
+    <script>
+        let playerChoice = '';
+        let selectedBtn = '';
+
+        function startGame() {
+            document.getElementById('startBtn').style.display = 'none';
+            const animation = document.getElementById('animation');
+            animation.classList.remove('hidden');
+            animation.innerText = 'Rock...';
+            setTimeout(() => { animation.innerText = 'Paper...'; }, 500);
+            setTimeout(() => { animation.innerText = 'Scissors...'; }, 1000);
+            setTimeout(() => { 
+                animation.innerText = 'Shoot!';
+                showChoices();
+            }, 1500);
+        }
+
+        function showChoices() {
+            document.getElementById('choices').classList.remove('hidden');
+            document.getElementById('shootBtn').classList.remove('hidden');
+        }
+
+        function selectChoice(choice, btnId) {
+            if (selectedBtn) {
+                document.getElementById(selectedBtn).classList.remove('selected');
+            }
+            playerChoice = choice;
+            selectedBtn = btnId;
+            document.getElementById(btnId).classList.add('selected');
+        }
+
+        function playGame() {
+            // Always make the computer win, regardless of player's choice
+            const computerChoice = 'rock'; // You can change this to 'paper' or 'scissors' as needed
+
+            let resultMessage = `You lost!!!! You chose ${playerChoice}. The computer chose ${computerChoice}.`;
+
+            const reasons = [
+                "Computer wins because it has a secret algorithm!",
+                "Looks like the computer outsmarted you this time!",
+                "Better luck next time, the computer is on fire!",
+                "You lost this round, but don't give up!",
+                "The computer wins! Maybe it's just having a lucky day.",
+                "You got smoked like a barbeque!",
+                "Computer wins! Did you even try?",
+                "You just got schooled by a machine.",
+                "The computer wins! Guess it wasn't your day.",
+                "You lost. Perhaps it's time to switch to Tic-Tac-Toe."
+            ];
+            const randomReason = reasons[Math.floor(Math.random() * reasons.length)];
+
+            resultMessage += ` ${randomReason}`;
+
+            document.getElementById('result').innerText = resultMessage;
+            document.getElementById('choices').classList.add('hidden');
+            document.getElementById('shootBtn').classList.add('hidden');
+            document.getElementById('tryAgainBtn').classList.remove('hidden');
+        }
+
+        function tryAgain() {
+            document.getElementById('result').innerText = '';
+            document.getElementById('tryAgainBtn').classList.add('hidden');
+            document.getElementById(selectedBtn).classList.remove('selected');
+            startGame();
+        }
+    </script>
+</body>
+</html>

@@ -54,7 +54,7 @@ let workerCost = workerBaseCost;
 let productionUpgradeCost = productionUpgradeBaseCost;
 let workerUpgradeCost = workerUpgradeBaseCost;
 
-const costMultiplier = 1.15; // Fixed costMultiplier to 1.15
+const costMultiplier = 1
 
 let offers = [];
 let tasks = [];

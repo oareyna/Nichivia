@@ -3,12 +3,7 @@ function startGame() {
     document.getElementById('cutscene').style.display = 'none';
     document.getElementById('game').style.display = 'block';
 
-    // Generate initial task and offer
-    gameIntervals();
-    createOffer();
-    createTask();
-
-    // Reset game variables if needed
+    // Reset game variables
     money = 0;
     catnip = 0;
     factories = 1;
@@ -27,6 +22,12 @@ function startGame() {
     // Clear any existing offers and tasks
     offers = [];
     tasks = [];
+
+    // Start game intervals
+    gameIntervals();
+
+    // Immediately create first offer and task
+    createInitialOfferAndTask();
 
     // Update display
     updateDisplay();
@@ -134,21 +135,23 @@ document.getElementById('upgradeWorker').addEventListener('click', () => {
     }
 });
 
+function createInitialOfferAndTask() {
+    createOffer();
+    createTask();
+}
+
 function createOffer() {
-    // Only create a new offer if there are no existing offers
-    if (offers.length === 0) {
-        const offerAmount = Math.floor(Math.random() * 10) + 10;
-        const offerPrice = offerAmount * 5;
+    const offerAmount = Math.floor(Math.random() * 10) + 10;
+    const offerPrice = offerAmount * 5;
 
-        const offer = {
-            amount: offerAmount,
-            price: offerPrice,
-            timeout: setTimeout(() => failOffer(offer), 10000),
-        };
+    const offer = {
+        amount: offerAmount,
+        price: offerPrice,
+        timeout: setTimeout(() => failOffer(offer), 10000),
+    };
 
-        offers.push(offer);
-        renderOffers();
-    }
+    offers.push(offer);
+    renderOffers();
 }
 
 function renderOffers() {
@@ -187,33 +190,30 @@ function failOffer(offer) {
 }
 
 function createTask() {
-    // Only create a new task if there are no existing tasks
-    if (tasks.length === 0) {
-        const taskOptions = [
-            { description: "Write the reverse of the alphabet in order.", validate: (input) => input.trim().toUpperCase() === "ZYXWVUTSRQPONMLKJIHGFEDCBA" },
-            { description: "Calculate: (12 × 8) + (45 ÷ 5).", validate: (input) => input.trim() === "101" },
-            { description: "Type the first 10 prime numbers, separated by spaces.", validate: (input) => input.trim() === "2 3 5 7 11 13 17 19 23 29" },
-            { description: "What is the factorial of 5? (5!)", validate: (input) => input.trim() === "120" },
-            { description: "Solve this riddle: What has keys but can't open locks?", validate: (input) => input.trim().toLowerCase() === "piano" },
-            { description: "Write the Fibonacci sequence up to 21, separated by spaces.", validate: (input) => input.trim() === "0 1 1 2 3 5 8 13 21" },
-            { description: "What is the sum of all even numbers between 1 and 20?", validate: (input) => input.trim() === "110" },
-            { description: "Write the binary representation of the number 13.", validate: (input) => input.trim() === "1101" },
-            { description: "Spell the word 'Catnip' backward, three times with spaces.", validate: (input) => input.trim() === "pintaC pintaC pintaC" },
-            { description: "Find the square of 25 and subtract the square of 15.", validate: (input) => input.trim() === "400" },
-        ];
+    const taskOptions = [
+        { description: "Write the reverse of the alphabet in order.", validate: (input) => input.trim().toUpperCase() === "ZYXWVUTSRQPONMLKJIHGFEDCBA" },
+        { description: "Calculate: (12 × 8) + (45 ÷ 5).", validate: (input) => input.trim() === "101" },
+        { description: "Type the first 10 prime numbers, separated by spaces.", validate: (input) => input.trim() === "2 3 5 7 11 13 17 19 23 29" },
+        { description: "What is the factorial of 5? (5!)", validate: (input) => input.trim() === "120" },
+        { description: "Solve this riddle: What has keys but can't open locks?", validate: (input) => input.trim().toLowerCase() === "piano" },
+        { description: "Write the Fibonacci sequence up to 21, separated by spaces.", validate: (input) => input.trim() === "0 1 1 2 3 5 8 13 21" },
+        { description: "What is the sum of all even numbers between 1 and 20?", validate: (input) => input.trim() === "110" },
+        { description: "Write the binary representation of the number 13.", validate: (input) => input.trim() === "1101" },
+        { description: "Spell the word 'Catnip' backward, three times with spaces.", validate: (input) => input.trim() === "pintaC pintaC pintaC" },
+        { description: "Find the square of 25 and subtract the square of 15.", validate: (input) => input.trim() === "400" },
+    ];
 
-        const randomTaskIndex = Math.floor(Math.random() * taskOptions.length);
-        const selectedTask = taskOptions[randomTaskIndex];
+    const randomTaskIndex = Math.floor(Math.random() * taskOptions.length);
+    const selectedTask = taskOptions[randomTaskIndex];
 
-        const task = {
-            description: selectedTask.description,
-            validate: selectedTask.validate,
-            timeout: setTimeout(() => failTask(task), 15000),
-        };
+    const task = {
+        description: selectedTask.description,
+        validate: selectedTask.validate,
+        timeout: setTimeout(() => failTask(task), 15000),
+    };
 
-        tasks.push(task);
-        renderTasks();
-    }
+    tasks.push(task);
+    renderTasks();
 }
 
 function failTask(task) {
@@ -253,7 +253,7 @@ function renderTasks() {
 
 function checkGameOver() {
     if (marcoHappiness <= 0) {
-        gameRunning = false; // Stop game intervals
+        gameRunning = false;
         clearGameIntervals();
         showGameOverCutscene();
     }
@@ -261,7 +261,7 @@ function checkGameOver() {
 
 function checkVictory() {
     if (factories >= 100) {
-        gameRunning = false; // Stop game intervals
+        gameRunning = false;
         clearGameIntervals();
         showVictoryCutscene();
     }
@@ -274,11 +274,12 @@ function clearGameIntervals() {
 }
 
 function gameIntervals() {
-    if (!gameRunning) return; // Prevent intervals if the game is over
+    if (!gameRunning) return;
 
-    // Clear any existing intervals to prevent multiple concurrent intervals
+    // Clear any existing intervals
     clearGameIntervals();
 
+    // Generate catnip every second
     window.catnipInterval = setInterval(() => {
         if (gameRunning) {
             generateCatnip();
@@ -286,12 +287,18 @@ function gameIntervals() {
         }
     }, 1000);
 
+    // Generate offers every 13 seconds
     window.offerInterval = setInterval(() => {
-        if (gameRunning) createOffer();
+        if (gameRunning && offers.length === 0) {
+            createOffer();
+        }
     }, 13000);
 
+    // Generate tasks every 17 seconds
     window.taskInterval = setInterval(() => {
-        if (gameRunning) createTask();
+        if (gameRunning && tasks.length === 0) {
+            createTask();
+        }
     }, 17000);
 }
 

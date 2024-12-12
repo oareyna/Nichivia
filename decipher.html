@@ -131,11 +131,17 @@
     }
 
     @keyframes progress-bar-animation {
-      from { width: 0%; }
-      to { width: 100%; }
+      from {
+        width: 0%;
+      }
+      to {
+        width: 100%;
+      }
     }
 
-    .game-section, #victory, #game-over {
+    .game-section,
+    #victory,
+    #game-over {
       display: none;
     }
 
@@ -143,7 +149,8 @@
       display: block;
     }
 
-    .task, .offer {
+    .task,
+    .offer {
       background-color: #F3E5F5;
       border: 1px solid #E1BEE7;
       border-radius: 10px;
@@ -153,7 +160,8 @@
       transition: all 0.3s ease;
     }
 
-    .task:hover, .offer:hover {
+    .task:hover,
+    .offer:hover {
       background-color: #E6E6FA;
       transform: translateX(5px);
     }
@@ -193,49 +201,50 @@
     <button onclick="startGame()">Start Game</button>
   </div>
 
-    <div id="game" class="container game-section">
-        <h1>Catnip Tycoon</h1>
-        <div class="stats">
-        <p>💵 Money: $<span id="money">0</span></p>
-        <p>🍃 Total Catnip: <span id="catnip">0</span></p>
-        <p>🏭 Factories: <span id="factories">1</span></p>
-        <p>⚙️ Per Factory Production Rate: <span id="productionRate">1</span>/sec</p>
-        <p>🐱 Cats (Workers): <span id="workers">0</span></p>
-        <p>🐾 Cat Productivity: <span id="workerRate">0.40</span>/sec</p>
-        </div>
-        <div class="happiness-bar-container">
-        <div id="happiness-level" class="happiness-bar"></div>
-        </div>
-        <div class="actions">
-        <div class="click-button-container">
-            <button id="click-button"></button><br>
-        </div>
-        <button id="buyFactory">Buy Factory ($50)</button>
-        <button id="upgradeProduction">Upgrade Production ($100)</button>
-        <button id="hireWorker">Hire Cat ($25)</button>
-        <button id="upgradeWorker">Upgrade Worker Productivity ($50)</button>
+  <div id="game" class="container game-section">
+    <h1>Catnip Tycoon</h1>
+    <div class="stats">
+      <p>💵 Money: $<span id="money">0</span></p>
+      <p>🍃 Total Catnip: <span id="catnip">0</span></p>
+      <p>🏭 Factories: <span id="factories">1</span></p>
+      <p>⚙️ Per Factory Production Rate: <span id="productionRate">1</span>/sec</p>
+      <p>🐱 Cats (Workers): <span id="workers">0</span></p>
+      <p>🐾 Cat Productivity: <span id="workerRate">0.40</span>/sec</p>
+    </div>
+    <div class="happiness-bar-container">
+      <div id="happiness-level" class="happiness-bar"></div>
+    </div>
+    <div class="actions">
+      <div class="click-button-container">
+        <button id="click-button"></button><br>
+      </div>
+      <button id="buyFactory">Buy Factory ($50)</button>
+      <button id="upgradeProduction">Upgrade Production ($100)</button>
+      <button id="hireWorker">Hire Cat ($25)</button>
+      <button id="upgradeWorker">Upgrade Worker Productivity ($50)</button>
     </div>
 
     <div id="offerContainer"></div>
     <div id="taskContainer"></div>
+  </div>
 
-
-<div id="victory" class="container">
+  <div id="victory" class="container">
     <h1>Is it Victory?</h1>
     <p>Congratulations! You've built 100 factories but the Kitty Cops have finally caught Mr. Penguino.</p>
-    <p>Now lets see if you can escape the police.</p>
+    <p>Now let's see if you can escape the police.</p>
     <a href="Game3.html" style="margin-left: 20px;">
-        <button>Escape from the Popo</button>
-      </a>
-</div>
+      <button>Escape from the Popo</button>
+    </a>
+  </div>
 
-<div id="game-over" class="container">
+  <div id="game-over" class="container">
     <h1>Game Over!</h1>
     <p>Marco has stopped dealing with you. Now instead of producing Catnip, you are just an addict!</p>
     <p>If you are seeing this on the victory screen just ignore.👀</p>
     <button onclick="location.reload()">Try Again</button>
-</div>
+  </div>
 
-<script src="decipher.js"></script>
+  <script src="decipher.js"></script>
 </body>
+
 </html>

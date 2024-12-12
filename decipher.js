@@ -265,7 +265,7 @@ function gameIntervals() {
 
     setInterval(() => {
         if (gameRunning) createTask();
-    }, 20000);
+    }, 17000);
 }
 
 

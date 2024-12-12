@@ -4,11 +4,12 @@ function startGame() {
     document.getElementById('game').style.display = 'block';
 
     // Generate initial task and offer
+    gameIntervals();
     createOffer();
     createTask();
 
     // Start intervals after the game starts
-    gameIntervals();
+    
 }
 
 // Game Variables

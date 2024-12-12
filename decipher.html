@@ -1,238 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catnip Tycoon</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #8E24AA;
-            --secondary-color: #6A1B9A;
-            --background-color: #F3E5F5;
-            --card-color: #FFFFFF;
-            --text-color: #333;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catnip Tycoon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #8E24AA;
+      --secondary-color: #6A1B9A;
+      --background-color: #F3E5F5;
+      --card-color: #FFFFFF;
+      --text-color: #333;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        body {
-            font-family: 'Nunito', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
 
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-            background-color: var(--card-color);
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            padding: 40px;
-            text-align: center;
-        }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background-color: var(--card-color);
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      text-align: center;
+    }
 
-        h1 {
-            color: var(--primary-color);
-            font-weight: 700;
-            margin-bottom: 20px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
+    h1 {
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-        .stats {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
 
-        .stats p {
-            background-color: #F3E5F5;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-weight: 600;
-            min-width: 150px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-        }
+    .stats p {
+      background-color: #F3E5F5;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: 600;
+      min-width: 150px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
 
-        .stats p:hover {
-            transform: scale(1.05);
-        }
+    .stats p:hover {
+      transform: scale(1.05);
+    }
 
-        button {
-            font-family: 'Nunito', sans-serif;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            margin: 10px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+    button {
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      margin: 10px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        button:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-        }
+    button:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
 
-        button:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-        button.disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
+    button.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
 
-        #click-button {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
+    #click-button {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+      background-image: url('abc.avif'); /* Replace with your image URL */
+    }
 
-        #click-button:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
+    #click-button:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
 
-        .happiness-bar-container {
-            width: 100%;
-            background-color: #eee;
-            height: 20px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
+    .happiness-bar-container {
+      width: 100%;
+      background-color: #eee;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
 
-        .happiness-bar {
-            height: 100%;
-            background-image: linear-gradient(to right, #f00, #ff0, #0f0); /* Example gradient */
-            animation: progress-bar-animation 2s linear;
-        }
+    .happiness-bar {
+      height: 100%;
+      background-image: linear-gradient(to right, #f00, #ff0, #0f0); /* Example gradient */
+      animation: progress-bar-animation 2s linear;
+    }
 
-        @keyframes progress-bar-animation {
-            from { width: 0%; }
-            to { width: 100%; }
-        }
+    @keyframes progress-bar-animation {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
 
-        .game-section, #victory, #game-over {
-            display: none;
-        }
+    .game-section, #victory, #game-over {
+      display: none;
+    }
 
-        #cutscene {
-            display: block;
-        }
+    #cutscene {
+      display: block;
+    }
 
-        .task, .offer {
-            background-color: #F3E5F5;
-            border: 1px solid #E1BEE7;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            text-align: left;
-            transition: all 0.3s ease;
-        }
+    .task, .offer {
+      background-color: #F3E5F5;
+      border: 1px solid #E1BEE7;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px 0;
+      text-align: left;
+      transition: all 0.3s ease;
+    }
 
-        .task:hover, .offer:hover {
-            background-color: #E6E6FA;
-            transform: translateX(5px);
-        }
+    .task:hover, .offer:hover {
+      background-color: #E6E6FA;
+      transform: translateX(5px);
+    }
 
-        .actions {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .container {
-                margin: 15px;
-                padding: 20px;
-            }
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .container {
+        margin: 15px;
+        padding: 20px;
+      }
 
-            .stats {
-                flex-direction: column;
-                align-items: center;
-            }
+      .stats {
+        flex-direction: column;
+        align-items: center;
+      }
 
-            button {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-    </style>
+      button {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div id="cutscene" class="container">
-        <h1>Impawsible Catnip Tycoon</h1>
-        <p>Mr. Penguino and Marco are making a deal in the back alley to distribute catnip.</p>
-        <p>Your job is to grow Catnip Corporations while keeping Marco happy!</p>
-        <p>Goal: To get to 100 factories</p>
-        <button onclick="startGame()">Start Game</button>
-    </div>
+  <div id="cutscene" class="container">
+    <h1>Impawsible Catnip Tycoon</h1>
+    <p>Mr. Penguino and Marco are making a deal in the back alley to distribute catnip.</p>
+    <p>Your job is to grow Catnip Corporations while keeping Marco happy!</p>
+    <p>Goal: To get to 100 factories</p>
+    <button onclick="startGame()">Start Game</button>
+  </div>
 
     <div id="game" class="container game-section">
         <h1>Catnip Tycoon</h1>
         <div class="stats">
-            <p>💵 Money: $<span id="money">0</span></p>
-            <p>🍃 Total Catnip: <span id="catnip">0</span></p>
-            <p>🏭 Factories: <span id="factories">1</span></p>
-            <p>⚙️ Per Factory Production Rate: <span id="productionRate">1</span>/sec</p>
-            <p>🐱 Cats (Workers): <span id="workers">0</span></p>
-            <p>🐾 Cat Productivity: <span id="workerRate">0.40</span>/sec</p>
+        <p>💵 Money: $<span id="money">0</span></p>
+        <p>🍃 Total Catnip: <span id="catnip">0</span></p>
+        <p>🏭 Factories: <span id="factories">1</span></p>
+        <p>⚙️ Per Factory Production Rate: <span id="productionRate">1</span>/sec</p>
+        <p>🐱 Cats (Workers): <span id="workers">0</span></p>
+        <p>🐾 Cat Productivity: <span id="workerRate">0.40</span>/sec</p>
         </div>
         <div class="happiness-bar-container">
-            <div id="happiness-level" class="happiness-bar"></div>
+        <div id="happiness-level" class="happiness-bar"></div>
         </div>
         <div class="actions">
-            <div class="click-button-container">
-                <button id="click-button"></button><br>
-            </div>
-            <button id="buyFactory">Buy Factory ($50)</button>
-            <button id="upgradeProduction">Upgrade Production ($100)</button>
-            <button id="hireWorker">Hire Cat ($25)</button>
-            <button id="upgradeWorker">Upgrade Worker Productivity ($50)</button>
+        <div class="click-button-container">
+            <button id="click-button"></button><br>
         </div>
-
-        <div id="offerContainer"></div>
-        <div id="taskContainer"></div>
+        <button id="buyFactory">Buy Factory ($50)</button>
+        <button id="upgradeProduction">Upgrade Production ($100)</button>
+        <button id="hireWorker">Hire Cat ($25)</button>
+        <button id="upgradeWorker">Upgrade Worker Productivity ($50)</button>
     </div>
 
-    <div id="victory" class="container">
-        <h1>Is it Victory?</h1>
-        <p>Congratulations! You've built 100 factories but the Kitty Cops have finally caught Mr. Penguino.</p>
-        <p>Now lets see if you can escape the police.</p>
-        <a href="Game3.html" style="margin-left: 20px;">
-            <button>Escape from the Popo</button>
-        </a>
-    </div>
+    <div id="offerContainer"></div>
+    <div id="taskContainer"></div>
 
-    <div id="game-over" class="container">
-        <h1>Game Over!</h1>
-        <p>Marco has stopped dealing with you. Now instead of producing Catnip, you are just an addict!</p>
-        <p>If you are seeing this on the victory screen just ignore.👀</p>
-        <button onclick="location.reload()">Try Again</button>
-    </div>
 
-    <script src="decipher.js"></script>
+<div id="victory" class="container">
+    <h1>Is it Victory?</h1>
+    <p>Congratulations! You've built 100 factories but the Kitty Cops have finally caught Mr. Penguino.</p>
+    <p>Now lets see if you can escape the police.</p>
+    <a href="Game3.html" style="margin-left: 20px;">
+        <button>Escape from the Popo</button>
+      </a>
+</div>
+
+<div id="game-over" class="container">
+    <h1>Game Over!</h1>
+    <p>Marco has stopped dealing with you. Now instead of producing Catnip, you are just an addict!</p>
+    <p>If you are seeing this on the victory screen just ignore.👀</p>
+    <button onclick="location.reload()">Try Again</button>
+</div>
+
+<script src="decipher.js"></script>
 </body>
 </html>

@@ -273,7 +273,7 @@ function checkGameOver() {
 }
 
 function checkVictory() {
-    if (factories >= 100) { // Fixed the victory condition to 100 factories
+    if (factories >= 3) { // Fixed the victory condition to 100 factories
         gameRunning = false;
         clearGameIntervals();
         showVictoryCutscene();

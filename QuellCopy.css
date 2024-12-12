@@ -1,0 +1,156 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(15, 28px);
+  grid-template-rows: repeat(15, 28px);
+  gap: 1px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.tile {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tile-wall {
+  background-color: moccasin;
+}
+
+.tile-ground {
+  background-color: rgba(144, 238, 144, 0.5); /* Light green with opacity */
+}
+
+.tile-turret {
+    background-color: pink;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .tile-turret::before {
+    content: '🔫';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+  }
+  
+  .tile-turret::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    animation: turretPulse 1.5s infinite alternate;
+  }
+  
+  @keyframes turretPulse {
+    from { opacity: 0.2; }
+    to { opacity: 0.6; }
+  }
+  
+  .tile-melee {
+    background-color: grey;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .tile-melee::before {
+    content: '👾';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+  }
+  
+  .tile-melee::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    animation: meleeWiggle 0.5s infinite alternate;
+  }
+  
+  @keyframes meleeWiggle {
+    from { transform: rotate(-2deg); }
+    to { transform: rotate(2deg); }
+  }
+  
+  .tile-lava {
+    background-color: orange;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .tile-lava::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: red;
+    animation: lavaFlow 1s infinite alternate;
+  }
+  
+  @keyframes lavaFlow {
+    from { 
+      transform: scaleY(0.7);
+      background-color: darkred;
+    }
+    to { 
+      transform: scaleY(1);
+      background-color: firebrick;
+    }
+  }
+
+.tile-goal {
+  background-color: gold;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+}
+
+.tile-player {
+  background-color: lightblue;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
